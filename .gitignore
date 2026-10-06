@@ -1,0 +1,34 @@
+# Artefactos de compilación LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+*.xdv
+*.dvi
+
+# Vista previa local
+_preview/
+
+# Archivos temporales
+*.tmp
+*.temp
+*~
+*.bak
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+.DS_Store
