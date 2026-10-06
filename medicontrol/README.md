@@ -43,3 +43,7 @@ flutter test
 ## Alcance del código
 
 Los datos viven en SQLite y `shared_preferences` del dispositivo. El historial clínico editable, el CRUD de tratamientos, los recordatorios, la recuperación de contraseña y la sincronización con Firebase o una API no están implementados.
+
+## Documentación
+
+El informe técnico de esta entrega está en [informe-medicontrol.pdf](../informe-medicontrol.pdf).
