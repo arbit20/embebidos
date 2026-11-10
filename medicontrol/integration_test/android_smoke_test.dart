@@ -6,6 +6,7 @@ import 'package:medicontrol/data/local/session_store.dart';
 import 'package:medicontrol/data/repositories/local_auth_repository.dart';
 import 'package:medicontrol/features/auth/auth_controller.dart';
 import 'package:medicontrol/main.dart' as app;
+import 'package:medicontrol/widgets/paciente_tile.dart';
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,11 @@ void main() {
 
     Finder field(String label) => find.byWidgetPredicate(
       (widget) => widget is TextField && widget.decoration?.labelText == label,
+    );
+
+    Finder patient(String name) => find.descendant(
+      of: find.byType(PacienteTile),
+      matching: find.text(name),
     );
 
     Future<void> login() async {
@@ -78,8 +84,8 @@ void main() {
     await tap(find.widgetWithText(NavigationDestination, 'Pacientes'));
     await tester.enterText(find.byKey(const Key('buscar-paciente')), 'Ana Torres');
     await tester.pumpAndSettle();
-    expect(find.text('Ana Torres'), findsOneWidget);
-    await tap(find.text('Ana Torres'));
+    expect(patient('Ana Torres'), findsOneWidget);
+    await tap(patient('Ana Torres'));
     expect(find.text('Información del paciente'), findsOneWidget);
     await screenshot('03-perfil');
     await tester.pageBack();
@@ -107,7 +113,7 @@ void main() {
     expect(find.text('Nuevo paciente'), findsNothing);
     await tester.enterText(find.byKey(const Key('buscar-paciente')), 'Paciente ficticio CI');
     await tester.pumpAndSettle();
-    expect(find.text('Paciente ficticio CI'), findsOneWidget);
+    expect(patient('Paciente ficticio CI'), findsOneWidget);
     final database = await AppDatabase.abrir();
     final rows = await database.db.query(
       'pacientes',
