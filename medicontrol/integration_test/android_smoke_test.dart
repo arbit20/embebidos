@@ -13,6 +13,14 @@ void main() {
 
   testWidgets('Android: inicio, login, pacientes, agenda y sesión', (tester) async {
     Future<void> tap(Finder finder) async {
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pumpAndSettle();
+      // Native keyboard/window resizing is asynchronous to the Flutter frame.
+      await Future<void>.delayed(const Duration(milliseconds: 700));
+      await tester.pumpAndSettle();
+      if (finder.evaluate().isEmpty) {
+        await tester.scrollUntilVisible(finder, 200, maxScrolls: 10);
+      }
       await tester.ensureVisible(finder);
       await tester.tap(finder);
       await tester.pumpAndSettle();
