@@ -19,6 +19,10 @@ void main() {
     }
 
     Future<void> screenshot(String name) async {
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pumpAndSettle();
+      // Android window insets can arrive after Flutter's animation settles.
+      await Future<void>.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
       await binding.takeScreenshot(name);
     }
@@ -88,7 +92,7 @@ void main() {
     await tap(patient('Ana Torres'));
     expect(find.text('Información del paciente'), findsOneWidget);
     await screenshot('03-perfil');
-    await tester.pageBack();
+    await tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('buscar-paciente')), 'no-existe-ci');
     await tester.pumpAndSettle();
@@ -138,7 +142,7 @@ void main() {
     expect(await database.db.query('citas'), hasLength(before.length));
     // Re-enter and use Back to cover interrupted/repeated navigation.
     await tap(find.text('Nueva cita'));
-    await tester.pageBack();
+    await tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('Agenda'), findsOneWidget);
 
